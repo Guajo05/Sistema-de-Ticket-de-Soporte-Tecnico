@@ -5,8 +5,12 @@ on:
     branches:
       - testing
       - main
-    paths:
-      - 'backend/**'
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+  ECS_SERVICE: sistema-tickets-service
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
