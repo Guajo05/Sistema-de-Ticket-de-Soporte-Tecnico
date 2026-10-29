@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config import CORS_ORIGINS
 from .routers import catalogos, tecnicos, tickets, usuarios
+from .database import engine, Base
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Sistema de Tickets de Soporte Técnico",
