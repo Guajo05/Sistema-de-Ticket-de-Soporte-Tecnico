@@ -13,6 +13,6 @@ if not DATABASE_URL:
 
 CORS_ORIGINS = [
     origen.strip()
-    for origen in os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
+    for origen in os.getenv("CORS_ORIGINS", "*").split(",")
     if origen.strip()
 ]
