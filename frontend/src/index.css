@@ -1,46 +1,45 @@
 /* =====================================================================
    Sistema de Tickets · Soporte Técnico
-   Paleta: #086288 · #4D8DBA · #97D7FF · #FFEFC4
+   Nueva Paleta: #2D0000 · #6D0808 · #757D6F · #EEEAD7
    ===================================================================== */
 
 :root {
   /* === Paleta principal del proyecto === */
-  --azul-profundo: #086288;
-  --azul-medio: #4d8dba;
-  --azul-claro: #97d7ff;
-  --crema: #ffefc4;
+  --primary-dark: #2D0000;    /* Negro rojizo (antes azul profundo) */
+  --primary: #6D0808;         /* Rojo vino (antes azul medio) */
+  --secondary: #757D6F;       /* Verde oliva (antes azul claro) */
+  --accent: #EEEAD7;          /* Crema claro (antes crema oscura) */
 
   /* === Derivados de la paleta === */
-  --azul-profundo-oscuro: #064d6b;
-  --azul-medio-oscuro: #3f7ba3;
-  --crema-oscura: #ffe9a3;
-
+  --primary-darker: #1a0000;
+  --secondary-dark: #5a6155;
+  
   /* === Neutros === */
-  --bg: #f4f8fc;
+  --bg: #fcfbf9;              /* Un blanco cálido para el fondo */
   --card: #ffffff;
-  --texto: #0f2b3a;
-  --texto-suave: #5a7689;
-  --borde: #dbe8f0;
-  --borde-fuerte: #b9d3e3;
+  --texto: #2D0000;
+  --texto-suave: #757D6F;
+  --borde: #e6e3d8;
+  --borde-fuerte: #d1ccbc;
 
   /* === Estados semánticos === */
   --ok: #15803d;
   --ok-bg: #dcfce7;
-  --alerta-bg: #fef2f2;
-  --alerta-borde: #fecaca;
-  --alerta-texto: #991b1b;
-  --peligro: #dc2626;
-  --peligro-hover: #b91c1c;
+  --alerta-bg: #fee2e2;
+  --alerta-borde: #fca5a5;
+  --alerta-texto: #6D0808;
+  --peligro: #6D0808;         /* Usamos el rojo vino para eliminar */
+  --peligro-hover: #2D0000;
 
   /* === Radios y sombras === */
   --radio-sm: 8px;
   --radio: 12px;
   --radio-lg: 16px;
   --radio-pill: 999px;
-  --sombra-1: 0 1px 3px rgba(8, 98, 136, 0.06), 0 1px 2px rgba(8, 98, 136, 0.04);
-  --sombra-2: 0 4px 14px rgba(8, 98, 136, 0.08), 0 2px 4px rgba(8, 98, 136, 0.04);
-  --sombra-3: 0 10px 30px rgba(8, 98, 136, 0.10);
-  --foco: 0 0 0 4px rgba(151, 215, 255, 0.5);
+  --sombra-1: 0 1px 3px rgba(45, 0, 0, 0.06), 0 1px 2px rgba(45, 0, 0, 0.04);
+  --sombra-2: 0 4px 14px rgba(45, 0, 0, 0.08), 0 2px 4px rgba(45, 0, 0, 0.04);
+  --sombra-3: 0 10px 30px rgba(45, 0, 0, 0.10);
+  --foco: 0 0 0 4px rgba(109, 8, 8, 0.15);
 
   color-scheme: light;
 }
@@ -61,8 +60,8 @@ body {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 15px;
   background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(151, 215, 255, 0.35), transparent 60%),
-    radial-gradient(900px 500px at 110% 10%, rgba(255, 239, 196, 0.45), transparent 55%),
+    radial-gradient(1200px 600px at 10% -10%, rgba(238, 234, 215, 0.8), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(109, 8, 8, 0.08), transparent 55%),
     var(--bg);
   background-attachment: fixed;
   color: var(--texto);
@@ -83,8 +82,8 @@ body {
   margin-bottom: 24px;
   padding: 22px 26px;
   border-radius: var(--radio-lg);
-  background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul-medio) 100%);
-  color: #fff;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: var(--accent);
   box-shadow: var(--sombra-2);
   overflow: hidden;
 }
@@ -96,7 +95,7 @@ body {
   right: -8%;
   width: 340px;
   height: 340px;
-  background: radial-gradient(circle, rgba(255, 239, 196, 0.30), transparent 65%);
+  background: radial-gradient(circle, rgba(238, 234, 215, 0.15), transparent 65%);
   pointer-events: none;
 }
 
@@ -113,8 +112,46 @@ body {
   position: relative;
   z-index: 1;
   margin: 4px 0 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(238, 234, 215, 0.85);
   font-size: 0.92rem;
+}
+
+/* ================== HEADER CON ÍCONO ================== */
+.app-header-contenido {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-header-icono {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(238, 234, 215, 0.15);
+  border: 1px solid rgba(238, 234, 215, 0.3);
+  backdrop-filter: blur(6px);
+  color: var(--accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.app-header:hover .app-header-icono {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .app-header-icono {
+    width: 44px;
+    height: 44px;
+  }
+  .app-header h1 {
+    font-size: 1.25rem;
+  }
 }
 
 /* ================== ALERTA GLOBAL ================== */
@@ -195,7 +232,7 @@ body {
   margin: 0 0 14px;
   font-size: 1.05rem;
   font-weight: 600;
-  color: var(--azul-profundo);
+  color: var(--primary);
 }
 
 .form label,
@@ -227,7 +264,7 @@ select {
 
 input::placeholder,
 textarea::placeholder {
-  color: #9bb3c1;
+  color: #a8a89f;
 }
 
 input:hover,
@@ -240,7 +277,7 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--azul-medio);
+  border-color: var(--primary);
   box-shadow: var(--foco);
 }
 
@@ -252,10 +289,22 @@ textarea {
 select {
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a7689' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23757D6F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 34px;
+}
+
+/* ================== LABELS CON ÍCONO ================== */
+.label-texto {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.label-texto svg {
+  color: var(--secondary);
+  flex-shrink: 0;
 }
 
 /* ================== BOTONES ================== */
@@ -268,18 +317,18 @@ select {
   font: inherit;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #fff;
-  background: var(--azul-profundo);
+  color: var(--accent);
+  background: var(--primary);
   border: none;
   border-radius: var(--radio-sm);
   cursor: pointer;
-  box-shadow: 0 1px 2px rgba(8, 98, 136, 0.18);
+  box-shadow: 0 1px 2px rgba(109, 8, 8, 0.2);
   transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
 }
 
 .btn:hover:not(:disabled) {
-  background: var(--azul-medio);
-  box-shadow: 0 3px 8px rgba(8, 98, 136, 0.22);
+  background: var(--primary-dark);
+  box-shadow: 0 3px 8px rgba(109, 8, 8, 0.3);
 }
 
 .btn:active:not(:disabled) {
@@ -293,12 +342,20 @@ select {
 
 .btn-peligro {
   background: var(--peligro);
-  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.18);
+  box-shadow: 0 1px 2px rgba(109, 8, 8, 0.2);
 }
 
 .btn-peligro:hover:not(:disabled) {
   background: var(--peligro-hover);
-  box-shadow: 0 3px 8px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 3px 8px rgba(109, 8, 8, 0.35);
+}
+
+.btn[type="submit"] svg {
+  transition: transform 0.2s ease;
+}
+
+.btn[type="submit"]:hover:not(:disabled) svg {
+  transform: translateX(2px) translateY(-1px);
 }
 
 /* ================== MENSAJES ================== */
@@ -316,7 +373,7 @@ select {
 }
 
 .msg-error {
-  color: var(--alerta-texto);
+  color: var(--primary);
 }
 
 /* ================== BARRA DE FILTROS ================== */
@@ -341,7 +398,7 @@ select {
   margin: 0;
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--azul-profundo);
+  color: var(--primary-dark);
 }
 
 .filtros {
@@ -376,13 +433,12 @@ select {
 /* ================== TICKET ================== */
 .ticket {
   position: relative;
-  border-left: 4px solid var(--azul-claro);
+  border-left: 4px solid var(--secondary);
 }
 
-/* Acentos según urgencia (usando :has, soportado en navegadores modernos) */
-.ticket:has(.urgencia-critica) { border-left-color: #dc2626; }
-.ticket:has(.urgencia-alta)    { border-left-color: #f59e0b; }
-.ticket:has(.urgencia-media)   { border-left-color: var(--azul-medio); }
+.ticket:has(.urgencia-critica) { border-left-color: var(--primary); }
+.ticket:has(.urgencia-alta)    { border-left-color: #d97706; }
+.ticket:has(.urgencia-media)   { border-left-color: var(--secondary); }
 .ticket:has(.urgencia-baja)    { border-left-color: #16a34a; }
 
 .ticket-cabecera {
@@ -404,7 +460,7 @@ select {
 }
 
 .ticket-id {
-  color: var(--azul-medio);
+  color: var(--primary);
   font-weight: 700;
   font-size: 0.9rem;
 }
@@ -419,6 +475,20 @@ select {
   margin: 0 0 14px;
   font-size: 0.82rem;
   color: var(--texto-suave);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-item svg {
+  color: var(--secondary);
+  flex-shrink: 0;
 }
 
 .ticket-meta strong {
@@ -456,37 +526,41 @@ select {
   font-weight: 600;
   letter-spacing: 0.02em;
   border-radius: var(--radio-pill);
-  background: #eef3f7;
+  background: #f0f0f0;
   color: var(--texto-suave);
   white-space: nowrap;
 }
 
-/* Urgencias (paleta + semánticos) */
+.badge svg {
+  flex-shrink: 0;
+}
+
+/* Urgencias */
 .urgencia-baja {
   background: #dcfce7;
   color: #166534;
 }
 .urgencia-media {
-  background: var(--azul-claro);
-  color: var(--azul-profundo);
+  background: var(--accent);
+  color: var(--primary-dark);
 }
 .urgencia-alta {
-  background: var(--crema);
-  color: #7c4a03;
+  background: #fef3c7;
+  color: #92400e;
 }
 .urgencia-critica {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--primary);
+  color: var(--accent);
 }
 
-/* Estados (paleta) */
+/* Estados */
 .estado-abierto {
-  background: var(--azul-claro);
-  color: var(--azul-profundo);
+  background: var(--accent);
+  color: var(--primary-dark);
 }
 .estado-en-progreso {
-  background: var(--azul-medio);
-  color: #fff;
+  background: var(--secondary);
+  color: var(--accent);
 }
 .estado-resuelto {
   background: #d1fae5;
@@ -497,74 +571,6 @@ select {
   color: #374151;
 }
 
-/* ================== HEADER CON ÍCONO ================== */
-.app-header-contenido {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.app-header-icono {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(6px);
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-@media (max-width: 480px) {
-  .app-header-icono {
-    width: 44px;
-    height: 44px;
-  }
-  .app-header h1 {
-    font-size: 1.25rem;
-  }
-}
-
-.app-header-icono {
-  transition: transform 0.3s ease;
-}
-.app-header:hover .app-header-icono {
-  transform: rotate(-6deg) scale(1.05);
-}
-
-/* ================== META CON ÍCONOS ================== */
-.ticket-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-}
-
-.meta-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.meta-item svg {
-  color: var(--azul-medio);
-  flex-shrink: 0;
-}
-
-/* ================== BADGES CON ÍCONO ================== */
-.badge svg {
-  flex-shrink: 0;
-}
-
-/* ================== BOTÓN CON ÍCONO ================== */
-.btn svg {
-  flex-shrink: 0;
-}
-
 .estado-en-progreso svg {
   animation: girar 1.6s linear infinite;
 }
@@ -573,16 +579,4 @@ select {
   to {
     transform: rotate(360deg);
   }
-}
-
-/* ================== LABELS CON ÍCONO ================== */
-.label-texto {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.label-texto svg {
-  color: var(--azul-medio);
-  flex-shrink: 0;
 }
