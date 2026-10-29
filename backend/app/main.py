@@ -26,3 +26,7 @@ app.include_router(catalogos.router)
 @app.get("/health", tags=["Salud"])
 def health():
     return {"status": "ok"}
+
+@app.get("/", tags=["Raíz"])
+def read_root():
+    return {"status": "ok", "message": "API de Tickets funcionando correctamente"}
