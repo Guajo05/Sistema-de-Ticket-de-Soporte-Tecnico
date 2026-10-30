@@ -26,7 +26,6 @@ class Usuario(Base):
         DateTime(timezone=True), server_default=func.now()
     )
 
-
 class Tecnico(Base):
     __tablename__ = "tecnicos"
 
@@ -37,7 +36,6 @@ class Tecnico(Base):
     fecha_creacion: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
-
 
 class EstadoTicket(Base):
     __tablename__ = "estados_ticket"
@@ -54,6 +52,11 @@ class UrgenciaTicket(Base):
     nombre: Mapped[str] = mapped_column(String(50), unique=True)
     descripcion: Mapped[Optional[str]] = mapped_column(String(200))
 
+class RiesgoTicket(Base):
+    __tablename__ = "riesgos_ticket"
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    nombre: Mapped[str] = mapped_column(String(50))
+    descripcion: Mapped[str] = mapped_column(String(150))
 
 class Ticket(Base):
     __tablename__ = "tickets"
@@ -76,10 +79,13 @@ class Ticket(Base):
     fecha_creacion: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
-    # La BD solo pone el valor al insertar; onupdate lo renueva en cada UPDATE
+
     fecha_actualizacion: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
+
+    riesgo_ticket_id: Mapped[int] = mapped_column(ForeignKey("riesgos_ticket.id"), nullable=True)
+    riesgo: Mapped["RiesgoTicket"] = relationship()
 
     estado: Mapped[EstadoTicket] = relationship(lazy="joined")
     urgencia: Mapped[UrgenciaTicket] = relationship(lazy="joined")

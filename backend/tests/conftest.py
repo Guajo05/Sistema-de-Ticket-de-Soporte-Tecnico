@@ -41,7 +41,7 @@ def preparar_bd():
     with engine.begin() as conn:
         conn.exec_driver_sql("DROP SCHEMA public CASCADE")
         conn.exec_driver_sql("CREATE SCHEMA public")
-        for nombre in ("01-init.sql", "02-seed.sql"):
+        for nombre in ("01-init.sql", "02-seed.sql", "03-add-riesgo-urgencias.sql"):
             sql = (CARPETA_DATABASE / nombre).read_text(encoding="utf-8-sig")
             conn.exec_driver_sql(sql)
     yield

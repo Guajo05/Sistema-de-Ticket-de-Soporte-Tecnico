@@ -3,15 +3,17 @@ import {
   AlertCircle,
   FilePlus2,
   Send,
+  ShieldAlert,
   Ticket as TicketIcon,
   User,
   Wrench,
 } from "lucide-react";
 
-export default function TicketForm({ urgencias, usuarios, tecnicos, onCrear }) {
+export default function TicketForm({ urgencias, riesgos, usuarios, tecnicos, onCrear }) {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [urgenciaId, setUrgenciaId] = useState("");
+  const [riesgoId, setRiesgoId] = useState("");
   const [usuarioId, setUsuarioId] = useState("");
   const [tecnicoId, setTecnicoId] = useState("");
   const [enviando, setEnviando] = useState(false);
@@ -26,14 +28,17 @@ export default function TicketForm({ urgencias, usuarios, tecnicos, onCrear }) {
         titulo,
         descripcion,
         urgencia_ticket_id: Number(urgenciaId),
+        riesgo_ticket_id: Number(riesgoId),
         usuario_id: Number(usuarioId),
       };
       if (tecnicoId) datos.tecnico_id = Number(tecnicoId);
 
       await onCrear(datos);
+      
       setTitulo("");
       setDescripcion("");
       setUrgenciaId("");
+      setRiesgoId("");
       setUsuarioId("");
       setTecnicoId("");
       setMensaje({ tipo: "ok", texto: "Ticket creado correctamente" });
@@ -94,6 +99,21 @@ export default function TicketForm({ urgencias, usuarios, tecnicos, onCrear }) {
           {urgencias.map((u) => (
             <option key={u.id} value={u.id}>
               {u.nombre}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <label>
+        <span className="label-texto">
+          <ShieldAlert size={13} strokeWidth={2.3} />
+          Riesgo
+        </span>
+        <select value={riesgoId} onChange={(e) => setRiesgoId(e.target.value)} required>
+          <option value="">Selecciona…</option>
+          {riesgos.map((r) => (
+            <option key={r.id} value={r.id}>
+              {r.nombre}
             </option>
           ))}
         </select>

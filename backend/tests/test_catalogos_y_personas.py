@@ -15,8 +15,13 @@ def test_listar_estados(client):
 def test_listar_urgencias(client):
     r = client.get("/urgencias")
     assert r.status_code == 200
-    nombres = [u["nombre"] for u in r.json()]
-    assert nombres == ["Baja", "Media", "Alta", "Crítica"]
+    riesgos = {u["nombre"]: u["riesgo"] for u in r.json()}
+    assert riesgos == {
+        "Baja": "Bajo",
+        "Media": "Medio",
+        "Alta": "Alto",
+        "Crítica": "Crítico",
+    }
 
 
 # ---------- Usuarios ----------
