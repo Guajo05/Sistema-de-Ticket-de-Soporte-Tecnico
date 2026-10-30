@@ -10,9 +10,15 @@ INSERT INTO estados_ticket (nombre, descripcion) VALUES
     ('Cerrado',     'Ticket finalizado')
 ON CONFLICT (nombre) DO NOTHING;
 
-INSERT INTO urgencias_ticket (nombre, descripcion) VALUES
-    ('Baja',    'No afecta el trabajo diario'),
-    ('Media',   'Afecta parcialmente el trabajo'),
-    ('Alta',    'Afecta seriamente el trabajo'),
-    ('Crítica', 'Bloquea por completo la operación')
+INSERT INTO urgencias_ticket (nombre, descripcion, riesgo) VALUES
+    ('Baja',    'No afecta el trabajo diario',        'Bajo'),
+    ('Media',   'Afecta parcialmente el trabajo',     'Medio'),
+    ('Alta',    'Afecta seriamente el trabajo',       'Alto'),
+    ('Crítica', 'Bloquea por completo la operación', 'Crítico')
 ON CONFLICT (nombre) DO NOTHING;
+
+-- 2. Insertar algunos datos de prueba
+INSERT INTO riesgos_ticket (nombre, descripcion) VALUES 
+('Bajo', 'No afecta la operatividad'),
+('Medio', 'Afecta a un departamento'),
+('Alto', 'Compromete datos o seguridad');

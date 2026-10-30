@@ -33,7 +33,10 @@ CREATE TABLE estados_ticket (
 CREATE TABLE urgencias_ticket (
     id SMALLINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE,
-    descripcion VARCHAR(200)
+    descripcion VARCHAR(200),
+    riesgo VARCHAR(20) NOT NULL,
+    CONSTRAINT ck_urgencias_ticket_riesgo
+        CHECK (riesgo IN ('Bajo', 'Medio', 'Alto', 'Crítico'))
 );
 
 -- 5. Tabla principal de tickets
@@ -66,6 +69,16 @@ CREATE TABLE tickets (
     CONSTRAINT ck_ticket_descripcion_no_vacia
         CHECK (LENGTH(TRIM(descripcion)) > 0)
 );
+
+-- 1. Crear la nueva tabla de riesgos
+CREATE TABLE riesgos_ticket (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(150)
+);
+
+-- 3. Agregar la nueva columna a la tabla tickets existente
+ALTER TABLE tickets ADD COLUMN riesgo_ticket_id INTEGER REFERENCES riesgos_ticket(id);
 
 -- 8. Indices para consultas y relaciones
 CREATE INDEX idx_tickets_usuario

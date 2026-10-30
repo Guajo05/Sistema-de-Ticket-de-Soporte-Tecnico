@@ -21,7 +21,6 @@ async function request(path, options = {}) {
         detalle = body.detail.map((d) => d.msg).join(". ");
       }
     } catch {
-      // la respuesta no traía JSON; dejamos el mensaje genérico
     }
     throw new Error(detalle);
   }
@@ -33,6 +32,7 @@ async function request(path, options = {}) {
 // ---------- Catálogos ----------
 export const getEstados = () => request("/estados");
 export const getUrgencias = () => request("/urgencias");
+export const getRiesgos = () => request("/riesgos");
 
 // ---------- Usuarios y técnicos ----------
 export const getUsuarios = () => request("/usuarios");

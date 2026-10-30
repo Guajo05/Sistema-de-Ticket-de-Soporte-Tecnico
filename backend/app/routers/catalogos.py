@@ -7,10 +7,14 @@ from ..database import get_db
 
 router = APIRouter(tags=["Catálogos"])
 
-@router.get("/estados", response_model=list[schemas.EstadoOut])
+@router.get("/estados", response_model=list[schemas.EstadoTicketOut])
 def listar_estados(db: Session = Depends(get_db)):
-    return db.scalars(select(models.EstadoTicket).order_by(models.EstadoTicket.id)).all()
+    return db.scalars(select(models.EstadoTicket)).all()
 
-@router.get("/urgencias", response_model=list[schemas.UrgenciaOut])
+@router.get("/urgencias", response_model=list[schemas.UrgenciaTicketOut])
 def listar_urgencias(db: Session = Depends(get_db)):
-    return db.scalars(select(models.UrgenciaTicket).order_by(models.UrgenciaTicket.id)).all()
+    return db.scalars(select(models.UrgenciaTicket)).all()
+
+@router.get("/riesgos", response_model=list[schemas.RiesgoTicketOut])
+def listar_riesgos(db: Session = Depends(get_db)):
+    return db.scalars(select(models.RiesgoTicket)).all()

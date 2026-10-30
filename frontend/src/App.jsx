@@ -8,6 +8,7 @@ import TicketList from "./components/TicketList";
 export default function App() {
   const [estados, setEstados] = useState([]);
   const [urgencias, setUrgencias] = useState([]);
+  const [riesgos, setRiesgos] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [tecnicos, setTecnicos] = useState([]);
   const [tickets, setTickets] = useState([]);
@@ -17,14 +18,16 @@ export default function App() {
 
   const cargarCatalogos = useCallback(async () => {
     try {
-      const [e, ur, us, te] = await Promise.all([
+      const [e, ur, ri, us, te] = await Promise.all([
         api.getEstados(),
         api.getUrgencias(),
+        api.getRiesgos(),
         api.getUsuarios(),
         api.getTecnicos(),
       ]);
       setEstados(e);
       setUrgencias(ur);
+      setRiesgos(ri);
       setUsuarios(us);
       setTecnicos(te);
     } catch (err) {
@@ -52,7 +55,6 @@ export default function App() {
     cargarTickets();
   }, [cargarTickets]);
 
-  // Estas funciones lanzan el error hacia el formulario, que lo muestra él mismo
   async function crearTicket(datos) {
     await api.crearTicket(datos);
     await cargarTickets();
@@ -68,7 +70,6 @@ export default function App() {
     setTecnicos(await api.getTecnicos());
   }
 
-  // Estas acciones vienen de la lista: el error se muestra en el banner global
   async function actualizarTicket(id, cambios) {
     try {
       await api.actualizarTicket(id, cambios);
@@ -118,6 +119,7 @@ export default function App() {
         <aside className="panel-lateral">
           <TicketForm
             urgencias={urgencias}
+            riesgos={riesgos}
             usuarios={usuarios}
             tecnicos={tecnicos}
             onCrear={crearTicket}
@@ -133,26 +135,20 @@ export default function App() {
               <select
                 value={filtros.estado_id}
                 onChange={(e) => cambiarFiltro("estado_id", e.target.value)}
-                aria-label="Filtrar por estado"
               >
                 <option value="">Todos los estados</option>
                 {estados.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.nombre}
-                  </option>
+                  <option key={e.id} value={e.id}>{e.nombre}</option>
                 ))}
               </select>
 
               <select
                 value={filtros.urgencia_id}
                 onChange={(e) => cambiarFiltro("urgencia_id", e.target.value)}
-                aria-label="Filtrar por urgencia"
               >
                 <option value="">Todas las urgencias</option>
                 {urgencias.map((u) => (
-                  <option key={u.id} value={u.id}>
-                    {u.nombre}
-                  </option>
+                  <option key={u.id} value={u.id}>{u.nombre}</option>
                 ))}
               </select>
             </div>

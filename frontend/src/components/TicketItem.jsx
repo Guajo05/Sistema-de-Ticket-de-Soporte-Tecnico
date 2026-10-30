@@ -8,12 +8,12 @@ import {
   Clock,
   Flame,
   Loader2,
+  ShieldAlert,
   Trash2,
   User,
   Wrench,
 } from "lucide-react";
 
-// "En progreso" -> "en-progreso", "Crítica" -> "critica" (para las clases CSS)
 function slug(texto) {
   return texto
     .normalize("NFD")
@@ -22,7 +22,6 @@ function slug(texto) {
     .replace(/\s+/g, "-");
 }
 
-// Ícono según urgencia (por texto normalizado)
 const ICONO_URGENCIA = {
   baja: ArrowDownCircle,
   media: AlertCircle,
@@ -30,7 +29,6 @@ const ICONO_URGENCIA = {
   critica: Flame,
 };
 
-// Ícono según estado (por texto normalizado)
 const ICONO_ESTADO = {
   abierto: Clock,
   "en-progreso": Loader2,
@@ -75,6 +73,11 @@ export default function TicketItem({ ticket, estados, tecnicos, onActualizar, on
             <IconoEstado size={13} strokeWidth={2.5} />
             {ticket.estado.nombre}
           </span>
+          {ticket.riesgo && (
+            <span className="badge estado-cerrado">
+              <ShieldAlert size={13} /> {ticket.riesgo.nombre}
+            </span>
+          )}
         </div>
       </div>
 

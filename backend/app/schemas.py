@@ -1,97 +1,93 @@
 from datetime import datetime
-from typing import Annotated, Optional
+from typing import Literal, Optional
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    EmailStr,
-    StringConstraints,
-    field_validator,
-)
+from pydantic import BaseModel, ConfigDict, Field
 
-Texto100 = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=100)]
-Texto150 = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=150)]
-TextoLibre = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
+Prioridad = Literal["baja", "media", "alta", "critica"]
+Estado = Literal["abierto", "en_progreso", "resuelto", "cerrado"]
 
+# ==========================================
+# ESQUEMAS DE CATÁLOGOS (Estados, Urgencias, Riesgos)
+# ==========================================
 
-class ORMModel(BaseModel):
+class EstadoTicketOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-
-
-# ---------- Catálogos ----------
-class EstadoOut(ORMModel):
     id: int
     nombre: str
     descripcion: Optional[str] = None
 
-
-class UrgenciaOut(ORMModel):
+class UrgenciaTicketOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     nombre: str
     descripcion: Optional[str] = None
 
+class RiesgoTicketOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    nombre: str
+    descripcion: Optional[str] = None
 
-# ---------- Usuarios y técnicos ----------
-class PersonaBase(BaseModel):
-    nombre: Texto100
-    correo: EmailStr
+# ==========================================
+# ESQUEMAS DE USUARIOS Y TÉCNICOS
+# ==========================================
 
-    @field_validator("correo")
-    @classmethod
-    def validar_largo_correo(cls, v: str) -> str:
-        if len(v) > 150:
-            raise ValueError("El correo no puede superar 150 caracteres")
-        return v
+class UsuarioCreate(BaseModel):
+    nombre: str = Field(min_length=3, max_length=100)
+    correo: str = Field(min_length=5, max_length=150)
+    departamento: Optional[str] = Field(default=None, max_length=100)
 
-
-class UsuarioCreate(PersonaBase):
-    departamento: Optional[Texto100] = None
-
-
-class UsuarioOut(ORMModel):
+class UsuarioOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     nombre: str
     correo: str
     departamento: Optional[str] = None
-    fecha_creacion: datetime
 
+class TecnicoCreate(BaseModel):
+    nombre: str = Field(min_length=3, max_length=100)
+    correo: str = Field(min_length=5, max_length=150)
+    especialidad: Optional[str] = Field(default=None, max_length=100)
 
-class TecnicoCreate(PersonaBase):
-    especialidad: Optional[Texto100] = None
-
-
-class TecnicoOut(ORMModel):
+class TecnicoOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     nombre: str
     correo: str
     especialidad: Optional[str] = None
-    fecha_creacion: datetime
 
+# ==========================================
+# ESQUEMAS DE TICKETS
+# ==========================================
 
-# ---------- Tickets ----------
 class TicketCreate(BaseModel):
-    titulo: Texto150
-    descripcion: TextoLibre
+    titulo: str = Field(min_length=3, max_length=150)
+    descripcion: str = Field(min_length=3)
     urgencia_ticket_id: int
+    riesgo_ticket_id: Optional[int] = None 
     usuario_id: int
     tecnico_id: Optional[int] = None
 
-
 class TicketUpdate(BaseModel):
-    titulo: Optional[Texto150] = None
-    descripcion: Optional[TextoLibre] = None
-    estado_ticket_id: Optional[int] = None
+    titulo: Optional[str] = Field(default=None, min_length=3, max_length=150)
+    descripcion: Optional[str] = Field(default=None, min_length=3)
     urgencia_ticket_id: Optional[int] = None
+    riesgo_ticket_id: Optional[int] = None 
+    estado_ticket_id: Optional[int] = None
     tecnico_id: Optional[int] = None
 
+class TicketOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
 
-class TicketOut(ORMModel):
     id: int
     titulo: str
     descripcion: str
-    estado: EstadoOut
-    urgencia: UrgenciaOut
+
+    estado: EstadoTicketOut
+    urgencia: UrgenciaTicketOut
+    riesgo: Optional[RiesgoTicketOut] = None 
     usuario: UsuarioOut
     tecnico: Optional[TecnicoOut] = None
+    
     fecha_creacion: datetime
     fecha_actualizacion: datetime
